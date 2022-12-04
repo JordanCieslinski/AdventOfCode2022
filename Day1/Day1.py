@@ -1,4 +1,3 @@
-
 file = open('input.txt', 'r')
 
 list = file.readlines()

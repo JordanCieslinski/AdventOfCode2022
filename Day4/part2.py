@@ -1,10 +1,6 @@
 file = open('input.txt', 'r')
 list = file.readlines()
 
-
-
-# 2-8, 3-7
-# 3-7, 2-8
 def findRename(str):
     a = int(str.split(',')[0].split('-')[0])
     b = int(str.split(',')[0].split('-')[1])

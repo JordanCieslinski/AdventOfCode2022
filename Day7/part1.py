@@ -1,4 +1,5 @@
 from treelib import Node, Tree
+#https://treelib.readthedocs.io/en/latest/treelib.html#module-treelib.tree
 
 file = open('./test.txt', 'r')
 list = file.readlines()

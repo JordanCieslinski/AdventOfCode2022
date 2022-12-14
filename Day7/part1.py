@@ -20,7 +20,7 @@ def find_id(cd, tag):
     return cd
 
 tree = Tree()
-tree.create_node('/')
+tree.create_node('/', data = 0)
 cd = tree.root
 
 for x in list:
@@ -33,5 +33,7 @@ for x in list:
     elif line[0:1] != '$':
         temp = parseInp(line)
         tree.create_node(temp[0], parent = cd, data = temp[1])
-        # ! need to store size somehow - there is a data value after parent = cd , data)
-tree.show()
+        print(tree[cd].data)
+cd = tree.root
+# print(tree[find_id(cd, 'c.dat')]) #! Will need to something like this in order to add up all of the sizes to the Directory.
+# !Im thinking that i may need to make a function that will update data, so that I can store it as the data of the dir

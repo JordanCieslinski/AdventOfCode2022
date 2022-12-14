@@ -1,30 +1,36 @@
+from treelib import Node, Tree
+
 file = open('./test.txt', 'r')
 list = file.readlines()
 
-class node:
-    def __init__(self, data, size, children = []):
-        self.data = data
-        self.size = size
-        self.children = children
-    def __str__(self, level=0):
-        st = '\t'*level+repr(self.data)+' '+str(self.size)+'\n'
-        for child in self.children:
-            st += child.__str__(level+1)
-        return st
-
-
-# Need to first split up each chunk of ls btw cds, then get to the directory and use recursion to load in each node
-# Eventually will need to computer total storage
-
-root = node('/', 0)
-root.children = []
-curDir = None
-for i in range(2, len(list)):
-    if list[i][0:4] == '$ cd':
-        break
-    if list[i][0:3] == 'dir':
-        root.children.append(node(list[i][4:len(list[i])-1], 0))
+# Takes in input from file, then determines which
+# kind of node that it is and returns a list with size and name
+def parseInp(str):
+    if str[0:3] == 'dir':
+        # size will be 0 in this case b/c dir have 0 size
+        return [str[4:], 0]
     else:
-        st = list[i].split()
-        root.children.append(node(st[1], st[0]))
-print(root)
+        ls = str.split()
+        ls.reverse()
+        return ls
+def find_id(cd, tag):
+    for i in tree.children(cd):
+        if str(i.tag) == tag:
+            return i.identifier
+    return cd
+
+tree = Tree()
+tree.create_node('/')
+cd = tree.root
+
+for x in list:
+    line = x.strip()
+    if line[0:4] == '$ cd':
+        if line[5:] == '..':
+            cd = tree[cd].bpointer
+        else:
+            cd = find_id(cd, line[5:])
+    elif line[0:1] != '$':
+        temp = parseInp(line)
+        tree.create_node(temp[0], parent = cd)
+        # ! need to store size somehow - there is a data value after parent = cd , data)

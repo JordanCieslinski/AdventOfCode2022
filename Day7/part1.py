@@ -32,5 +32,6 @@ for x in list:
             cd = find_id(cd, line[5:])
     elif line[0:1] != '$':
         temp = parseInp(line)
-        tree.create_node(temp[0], parent = cd)
+        tree.create_node(temp[0], parent = cd, data = temp[1])
         # ! need to store size somehow - there is a data value after parent = cd , data)
+tree.show()

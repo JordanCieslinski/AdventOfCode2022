@@ -1,9 +1,8 @@
 from treelib import Node, Tree
 #https://treelib.readthedocs.io/en/latest/treelib.html#module-treelib.tree
 
-file = open('./test.txt', 'r')
+file = open('./input.txt', 'r')
 list = file.readlines()
-
 # Takes in input from file, then determines which
 # kind of node that it is and returns a list with size and name
 def parseInp(str):
@@ -23,7 +22,6 @@ def find_id(cd, tag):
 tree = Tree()
 tree.create_node('/', data = 0)
 cd = tree.root
-
 for x in list:
     line = x.strip()
     if line[0:4] == '$ cd':
@@ -34,7 +32,29 @@ for x in list:
     elif line[0:1] != '$':
         temp = parseInp(line)
         tree.create_node(temp[0], parent = cd, data = temp[1])
-        print(tree[cd].data)
+
 cd = tree.root
-# print(tree[find_id(cd, 'c.dat')]) #! Will need to something like this in order to add up all of the sizes to the Directory.
-# !Im thinking that i may need to make a function that will update data, so that I can store it as the data of the dir
+
+total_sum = 0
+def iterate_dir(d, r):
+    dir = d.identifier
+    sum = 0
+    global total_sum
+    # print(d.tag)
+    for i in tree.children(dir):
+        if i.data == 0:
+            # print('s')
+            # print(sum)
+            sum+=iterate_dir(i, True)
+        elif i.data != 0:
+            sum+= int(i.data)    
+    tree[dir].data = sum 
+    if sum <= 100000:
+        total_sum+=sum
+    if r == True:
+        return sum
+iterate_dir(tree[tree.root], False)
+# tree.show()
+print(total_sum)
+
+

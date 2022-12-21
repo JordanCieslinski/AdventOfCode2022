@@ -1,10 +1,12 @@
 from treelib import Node, Tree
-#https://treelib.readthedocs.io/en/latest/treelib.html#module-treelib.tree
+# https://treelib.readthedocs.io/en/latest/treelib.html#module-treelib.tree
 
 file = open('./input.txt', 'r')
 list = file.readlines()
 # Takes in input from file, then determines which
 # kind of node that it is and returns a list with size and name
+
+
 def parseInp(str):
     if str[0:3] == 'dir':
         # size will be 0 in this case b/c dir have 0 size
@@ -13,6 +15,7 @@ def parseInp(str):
         ls = str.split()
         ls.reverse()
         return ls
+
 def find_id(cd, tag):
     for i in tree.children(cd):
         if str(i.tag) == tag:
@@ -20,7 +23,7 @@ def find_id(cd, tag):
     return cd
 
 tree = Tree()
-tree.create_node('/', data = 0)
+tree.create_node('/', data=0)
 cd = tree.root
 for x in list:
     line = x.strip()
@@ -31,12 +34,13 @@ for x in list:
             cd = find_id(cd, line[5:])
     elif line[0:1] != '$':
         temp = parseInp(line)
-        tree.create_node(temp[0], parent = cd, data = temp[1])
+        tree.create_node(temp[0], parent=cd, data=temp[1])
 
 cd = tree.root
 
 total_sum = 0
 directories = []
+
 
 def iterate_dir(d, r):
     dir = d.identifier
@@ -45,14 +49,15 @@ def iterate_dir(d, r):
     for i in tree.children(dir):
         if i.data == 0:
             directories.append(i)
-            sum+=iterate_dir(i, True)
+            sum += iterate_dir(i, True)
         elif i.data != 0:
-            sum+= int(i.data)    
-    tree[dir].data = sum 
+            sum += int(i.data)
+    tree[dir].data = sum
     if sum <= 100000:
-        total_sum+=sum
+        total_sum += sum
     if r == True:
         return sum
+
 iterate_dir(tree[tree.root], False)
 # tree.show()
 

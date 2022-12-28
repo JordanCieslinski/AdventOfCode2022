@@ -1,47 +1,47 @@
-with open('./test.txt', 'r') as file:
+with open('./input.txt', 'r') as file:
     lines = file.readlines()
 
 visible = 2 * len(lines) + 2 * len(lines[0].strip()) - 4
 
+
 def negate(int):
     return -int
 
-def check_if_visible(i, j, char):
-    # for loop to go through all versions left, right, up, down
-    #                                     0,    1,    2,   3
-    # check is going to choose if it iterates through the row or col
-    visible = False
-    for x in range(4):
-        i_add = 0
-        j_add = 0
-        check = ''
-        var_to_itr = None
-        if x == 0 or x == 1:
-            check = 'col'
-            j_add = 1
-            var_to_itr = j
-            if x == 0:
-                j_add = negate(j_add)
-        elif x == 2 or x == 3:
-            check = 'row'
-            i_add = 1
-            var_to_itr = i
-            if x == 2:
-                i_add = negate(i_add)
-        for y in range(1, var_to_itr+1)
-            if lines[i+(i_add*y)][j+(j_add*y)] < lines[i][j]:
-                visible = True
-            else:
+
+def check_if_visible(i, j):
+    count = 0
+    left = list(lines[i][0:j])
+    right = list(lines[i][j+1:])
+    up = []
+    down = []
+    for y in range(i):
+        up.insert(0, lines[y][j])
+    for y in range(i+1, len(lines)):
+        down.append(lines[y][j])
+
+    list_to_itr = None
+    visibility = None
+    for l in range(4):
+        if l == 0:
+            list_to_itr = left
+        elif l == 1:
+            list_to_itr = right
+        elif l == 2:
+            list_to_itr = up
+        elif l == 3:
+            list_to_itr = down
+        for x in list_to_itr:
+            if x >= lines[i][j]:
+                visibility = False
                 break
-            print(check, i_add, j_add ,lines[i][j], lines[i+i_add*y][j+j_add*y], visible)
-            # ! THE ISSUE IS THAT IT IS SEEING THAT A NUMBER NEXT TO IT IS GREATER THAN THE CUR VALUE, IT CONTINUES TO GO TO THE NEXT NUMBER IN THE LOOP. YOU NEED TO STOP THE LOOP AFTER IT IS GREATER ONCE SO THAT IT DOESNT RESET VISIBLE TO TRUE
-    return visible
-
-
-
-
+            else:
+                visibility = True
+        if visibility == True:
+            return True
 
 for i in range(1, len(lines)-1):
     lines[i] = lines[i].strip()
     for j in range(1, len(lines[i])-1):
-        check_if_visible(i,j, lines[i][j]), lines[i][j]
+        if check_if_visible(i, j):
+            visible+=1
+print(visible)

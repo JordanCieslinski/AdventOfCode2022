@@ -4,10 +4,6 @@ with open('./input.txt', 'r') as file:
 visible = 2 * len(lines) + 2 * len(lines[0].strip()) - 4
 
 
-def negate(int):
-    return -int
-
-
 def check_if_visible(i, j):
     count = 0
     left = list(lines[i][0:j])
